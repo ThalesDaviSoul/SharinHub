@@ -1,0 +1,30 @@
+{% extends 'sharin/layout.html' %}
+
+{% block body %}
+    <div class="corpo">
+        <div class="info">
+            <h1>Perfil</h1>
+        </div>
+
+        <div class="perfil-container">
+            <h1>{{request.user.username}}</h1>
+            <p>{{request.user.first_name}} {{request.user.last_name}}</p>
+            <div class="perfil-info">
+                <h1>Informações:</h1>
+                <p>Email: {{request.user.email}}</p>
+                <div id="perfil-options">
+                    <a class="botao" href="{% url 'sharin:historico-usuario'%}">Histórico de publicações</a><br><br>
+                    <a class="botao" href="{% url 'sharin:password_change'%}">Trocar a senha</a>
+                </div>
+            </div>
+            <div class="logout">
+                <form action="{% url 'sharin:logout_view' %}">
+                    <input type="submit" value="Log Out">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

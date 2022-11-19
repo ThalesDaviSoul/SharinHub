@@ -1,0 +1,28 @@
+{% extends "sharin/layout.html" %}
+
+{% block body %}
+    <div class="corpo">
+        <div class="info">
+            <h1>HOME</h1>
+        </div>
+        {% for publicacao in publicacao_list %}
+            <div class="container">
+                <div class="card">
+                    <h1>{{publicacao.titulo}}</h1>
+                    <div class="content">
+                        {% if publicacao.descricao|length > 275  %}
+                            <p>{{publicacao.descricao|slice:":275"}}..</p>
+                        {%else%}
+                            <p>{{publicacao.descricao}}</p>
+                        {% endif %}
+                        <div id="card-button">
+                            <a href="{% url 'sharin:publicacao-view' publicacao.id %}">Veja mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <h1>Sem publicações no momento.</h1>
+        {% endfor %}
+    </div>
+{% endblock %}

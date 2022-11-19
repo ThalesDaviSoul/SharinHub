@@ -1,0 +1,49 @@
+{% extends 'sharin/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+    <div class="post-container">
+        <h1 id="post-titulo">{{publicacao.titulo}}</h1>
+        <div id="post-descricao">
+            <p>{{publicacao.descricao}}</p>
+        </div>
+        <div class="post-extra-info">
+            <p>{{ publicacao.tags }}</p>
+            {% language 'pt-BR' %}
+                <p>{{ publicacao.data|date:"j F, Y" }}</p>
+            {% endlanguage %}
+
+            
+            {% if user == criador %}
+                <div class="post-op">
+                    <a id="editar" href="{% url 'sharin:publicacao-edit' publicacao.id %}">Editar</a>
+                    <a id="deletar" data-url="{% url 'sharin:publicacao-delete' publicacao.id %}">Deletar</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="contato">
+            <h1>Contato</h1>
+            <p>{{ criador.email }}</p>
+            <p>{{ publicacao.telefone }}</p>
+        </div>
+
+    </div>
+
+    
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('#deletar').onclick = function(){
+                let confirmacao = confirm('Tem certeza que deseja deletar?')
+                if(confirmacao === true){
+                    window.location.replace(document.querySelector('#deletar').dataset.url)
+                }
+            }
+        })
+
+
+    </script>
+{% endblock %}
